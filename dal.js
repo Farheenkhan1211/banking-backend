@@ -1,13 +1,13 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const uri =
-  "mongodb+srv://admin:topsecret@badbank.vmjfe.mongodb.net/badbank?retryWrites=true&w=majority";
+  "mongodb+srv://farheenkhan08:GiyDXzBBpb4Jx7S9@farheenkhanbanking.tcrsgun.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  serverApi: ServerApiVersion.v1,
+  serverApi: ServerApiVersion.v1
 });
 let db = null;
-client.connect((err) => {
+client.connect(err => {
   db = client.db("badbank");
   //console.log("Connected successfully to db server!");
 });
@@ -36,25 +36,25 @@ const all = () => {
 };
 
 // find a users accounts
-const find = (email) => {
+const find = email => {
   return new Promise((resolve, reject) => {
     const customers = db
       .collection("accounts")
       .find({ email: email })
-      .toArray(function (err, docs) {
+      .toArray(function(err, docs) {
         err ? reject(err) : resolve(docs);
       });
   });
 };
 
 // find a single user account
-const findOne = (email) => {
+const findOne = email => {
   return new Promise((resolve, reject) => {
     const customers = db
       .collection("accounts")
       .findOne({ email: email })
-      .then((doc) => resolve(doc))
-      .catch((err) => reject(err));
+      .then(doc => resolve(doc))
+      .catch(err => reject(err));
   });
 };
 
@@ -67,7 +67,7 @@ const update = (email, amount) => {
         { email: email },
         { $inc: { balance: amount } },
         { returnOriginal: false },
-        function (err, documents) {
+        function(err, documents) {
           err ? reject(err) : resolve(documents);
         }
       );
